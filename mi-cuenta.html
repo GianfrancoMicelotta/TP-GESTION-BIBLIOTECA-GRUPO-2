@@ -16,21 +16,24 @@
     <div class="selector">
       <a href="admin.html">Administrador</a><a class="activo" href="catalogo.html">Usuario</a>
     </div>
-    <button class="boton boton-claro boton-tema" type="button" title="Cambiar tema">
-    <img src="img/iconoTema.png" alt="Cambiar tema">
-    <a href="index.html">Salir</a>
+    <button class="boton boton-claro boton-tema" type="button" title="Cambiar tema" aria-label="Cambiar tema">
+    <img src="img/iconoTema.png" alt="">
+    </button>
+    <a href="index.html" data-logout>Salir</a>
   </header>
 
   <main>
     <h1>Datos del usuario</h1>
-    <section class="caja">
+    <section class="caja" id="datos-usuario">
       <p><strong>Nombre:</strong> Lucía</p>
       <p><strong>Apellido:</strong> Fernández</p>
       <p><strong>Usuario:</strong> lucia.f</p>
       <p><strong>Correo:</strong> luciafer@gmail.com</p>
       <p><strong>Perfil:</strong> Usuario</p>
     </section>
-    <button class="boton" type="button">Eliminar cuenta</button>
+    <h2>Mis favoritos</h2>
+    <section class="caja" id="lista-favoritos"></section>
+    <button class="boton" id="eliminar-cuenta" type="button">Eliminar cuenta</button>
     
   </main>
   <footer id="footer-principal">
@@ -49,5 +52,11 @@
          </ul>
       </div>
    </footer>
+  <script src="js/funciones/estado.js" defer></script>
+  <script src="js/funciones/catalogo.js" defer></script>
+  <script src="js/funciones/administracion.js" defer></script>
+  <script src="js/funciones/cuenta.js" defer></script>
+  <script src="js/funciones/acciones.js" defer></script>
+  <script src="js/app.js" defer></script>
 </body>
 </html>

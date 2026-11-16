@@ -610,6 +610,61 @@ body.pagina-seccion textarea {
   justify-content: center;
 }
 
+.selector-vista {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin: 16px 0;
+}
+
+.selector-vista .boton {
+  margin: 0;
+  padding: 8px 14px;
+}
+
+.catalogo-lista .items {
+  flex-direction: column;
+}
+
+.catalogo-lista .tarjeta {
+  display: grid;
+  grid-template-columns: minmax(90px, 140px) minmax(0, 1fr);
+  align-items: center;
+  width: 100%;
+}
+
+.catalogo-lista .tarjeta > .portada {
+  height: 100%;
+  min-height: 120px;
+}
+
+.catalogo-lista .tarjeta > img.portada {
+  width: 100%;
+  height: 100%;
+  min-height: 120px;
+  object-fit: cover;
+}
+
+.catalogo-lista .tarjeta .datos > p:last-child {
+  margin-bottom: 0;
+}
+
+.ayuda-credenciales {
+  padding: 12px;
+  border-left: 3px solid #24407a;
+  background-color: #eef2fb;
+}
+
+body.oscuro .ayuda-credenciales {
+  border-color: #8aa9e6;
+  background-color: #252e3d;
+  color: #eeeeee;
+}
+
+[hidden] {
+  display: none !important;
+}
+
 .tarjeta {
   width: 220px;
   background-color: white;
@@ -888,6 +943,104 @@ body.oscuro {
 .oscuro #footer-principal {
   background-color: #1b212b;
   border-top: 1px solid #333333;
+}
+
+body.oscuro .navegacion,
+body.oscuro .presentacion,
+body.oscuro .subtitulo-libros,
+body.oscuro.pagina-seccion > header,
+body.oscuro .caja,
+body.oscuro .tarjeta {
+  background-color: #1b212b;
+  color: #eeeeee;
+  border-color: #333b48;
+}
+
+body.oscuro .presentacion-descripcion,
+body.oscuro .libro p,
+body.oscuro.pagina-seccion main > p {
+  color: #b7c0cc;
+}
+
+body.oscuro .navegacion a,
+body.oscuro.pagina-seccion > header > a:not(.logo):not(.boton),
+body.oscuro.pagina-seccion > header .logo,
+body.oscuro .presentacion-enlace {
+  color: #a8bdf3;
+}
+
+body.oscuro.pagina-seccion main > h1,
+body.oscuro.pagina-seccion main > h2,
+body.oscuro.pagina-seccion main section > h1,
+body.oscuro.pagina-seccion main section > h2,
+body.oscuro label {
+  color: #eeeeee;
+}
+
+body.oscuro.pagina-seccion > header .selector a {
+  border-color: #8aa9e6;
+  color: #b7c9f0;
+}
+
+body.oscuro.pagina-seccion > header .selector a.activo {
+  background-color: #24407a;
+  color: #ffffff;
+}
+
+body.oscuro .boton-claro,
+body.oscuro.pagina-seccion > header .boton-claro {
+  background-color: #1b212b;
+  color: #b7c9f0;
+  border-color: #7189ba;
+}
+
+body.oscuro .estado {
+  color: #eeeeee;
+}
+
+body.oscuro th,
+body.oscuro td,
+body.oscuro .fila {
+  border-color: #3a4351;
+}
+
+.solo-lector {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.notificacion {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 1100;
+  max-width: min(420px, calc(100vw - 40px));
+  padding: 14px 18px;
+  border-radius: 4px;
+  background-color: #24407a;
+  color: #ffffff;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(8px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.notificacion.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
 }
 
 /* 
