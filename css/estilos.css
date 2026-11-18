@@ -907,8 +907,6 @@ body.oscuro .ayuda-credenciales {
 }
 
 .tarjeta {
-  display: flex;
-  flex-direction: column;
   width: 220px;
   background-color: white;
   border: 1px solid #cccccc;
@@ -951,25 +949,44 @@ body.pagina-seccion .portada {
   padding: 12px;
 }
 
-/* Los datos de la tarjeta ocupan todo el alto disponible
-   para que el corazón y "Añadir al carrito" queden siempre abajo */
-.tarjeta .datos {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
+/* VISTA DE TARJETAS DEL CATÁLOGO
+   Las tarjetas de una misma fila comparten las mismas filas de la grilla
+   (portada, título, autor, disponible, sinopsis y botones), así cada parte
+   queda a la misma altura aunque un título ocupe más líneas que otro. */
+#catalogo:not(.catalogo-lista) .items {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 220px);
+  justify-content: center;
+  column-gap: 16px;
+  row-gap: 0;
 }
 
-.tarjeta .datos > p {
-  margin-top: 0;
-}
-
-.tarjeta .estado {
-  align-self: flex-start;
+#catalogo:not(.catalogo-lista) .tarjeta {
+  display: grid;
+  grid-row: span 6;
+  grid-template-rows: subgrid;
   margin-bottom: 16px;
 }
 
-.tarjeta .datos > p:last-child {
-  margin-top: auto;
+#catalogo:not(.catalogo-lista) .datos {
+  display: grid;
+  grid-row: span 5;
+  grid-template-rows: subgrid;
+}
+
+#catalogo:not(.catalogo-lista) .datos > p {
+  margin-top: 0;
+}
+
+#catalogo:not(.catalogo-lista) .estado {
+  justify-self: start;
+  align-self: start;
+  margin-bottom: 16px;
+}
+
+/* El corazón y "Añadir al carrito" van siempre en la última fila */
+#catalogo:not(.catalogo-lista) .datos > p:last-child {
+  grid-row: 5;
 }
 
 img.portada {
@@ -1580,5 +1597,9 @@ button:disabled {
 
   .tarjeta {
     width: 100%;
+  }
+
+  #catalogo:not(.catalogo-lista) .items {
+    grid-template-columns: 1fr;
   }
 }
