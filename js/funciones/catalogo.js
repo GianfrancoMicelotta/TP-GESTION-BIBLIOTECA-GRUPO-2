@@ -78,11 +78,7 @@
     if (!list) return;
 
     app.ensureInventory();
-    const storedCart = app.readList(app.storageKeys.cart, app.defaultCart);
-    const cart = [...new Set(storedCart)];
-    if (cart.length !== storedCart.length) {
-      app.saveList(app.storageKeys.cart, cart);
-    }
+    const cart = app.readList(app.storageKeys.cart, app.defaultCart);
     const books = app.getPageBooks();
     list.replaceChildren();
     cart.forEach((title) => {
@@ -183,11 +179,7 @@
         .map((button) => button.closest(".tarjeta")?.querySelector("h3")?.textContent.trim())
         .filter(Boolean),
     );
-    const storedCart = app.readList(app.storageKeys.cart, app.defaultCart);
-    const cart = [...new Set(storedCart)];
-    if (cart.length !== storedCart.length) {
-      app.saveList(app.storageKeys.cart, cart);
-    }
+    const cart = app.readList(app.storageKeys.cart, app.defaultCart);
 
     document.querySelectorAll(".tarjeta").forEach((card) => {
       const title = card.querySelector("h3")?.textContent.trim();
@@ -197,17 +189,24 @@
       );
       const availableCopies = app.getAvailableCopies(title);
       if (state) state.textContent = availableCopies > 0 ? `Disponible (${availableCopies})` : "No disponible";
-      if (addButton) addButton.disabled = availableCopies === 0;
+      // cuento cuantas veces esta este libro en el carrito
+      let enCarrito = 0;
+      for (let i = 0; i < cart.length; i++) {
+        if (cart[i] === title) {
+          enCarrito++;
+        }
+      }
+
+      // si ya estan todos los ejemplares en el carrito se desactiva el boton
+      if (addButton) {
+        addButton.disabled = enCarrito >= availableCopies;
+      }
       const favorite = card.querySelector(".favorito");
       if (!title || !favorite) return;
       const isFavorite = favorites.includes(title);
       favorite.classList.toggle("activo", isFavorite);
       favorite.textContent = isFavorite ? "♥" : "♡";
       favorite.setAttribute("aria-label", `${isFavorite ? "Quitar" : "Agregar"} ${title} ${isFavorite ? "de" : "a"} favoritos`);
-      if (addButton && cart.includes(title)) {
-        addButton.textContent = "Ya está en el carrito";
-        addButton.disabled = true;
-      }
     });
 
     app.setCatalogView(localStorage.getItem(app.storageKeys.catalogView) || "tarjetas");
