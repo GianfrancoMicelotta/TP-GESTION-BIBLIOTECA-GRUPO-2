@@ -34,19 +34,23 @@
       return;
     }
 
-    if (card && target.matches(".boton")
-      && (target.textContent.toLowerCase().includes("añadir")
-        || target.textContent.toLowerCase().includes("agregar otra vez"))) {
+    if (card && target.matches(".boton") && target.textContent.toLowerCase().includes("añadir")) {
       const title = card.querySelector("h3").textContent.trim();
       const cart = app.readList(app.storageKeys.cart, app.defaultCart);
-      const quantityInCart = cart.filter((item) => item === title).length;
-      if (quantityInCart >= app.getAvailableCopies(title)) {
-        app.notify(`No hay más ejemplares disponibles de "${title}".`);
+      if (cart.includes(title)) {
+        target.textContent = "Ya está en el carrito";
+        target.disabled = true;
+        return;
+      }
+      if (app.getAvailableCopies(title) < 1) {
+        app.notify(`No hay ejemplares disponibles de "${title}".`);
+        target.disabled = true;
         return;
       }
       cart.push(title);
       app.saveList(app.storageKeys.cart, cart);
-      target.textContent = "Agregar otra vez";
+      target.textContent = "Ya está en el carrito";
+      target.disabled = true;
       app.updateNavigationCounts();
       app.notify(`"${title}" se agregó al carrito.`);
       return;
