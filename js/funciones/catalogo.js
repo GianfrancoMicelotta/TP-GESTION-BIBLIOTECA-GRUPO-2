@@ -188,7 +188,7 @@
         button.textContent.trim().toLowerCase().includes("añadir"),
       );
       const availableCopies = app.getAvailableCopies(title);
-      if (state) state.textContent = availableCopies > 0 ? `Disponible (${availableCopies})` : "No disponible";
+
       // cuento cuantas veces esta este libro en el carrito
       let enCarrito = 0;
       for (let i = 0; i < cart.length; i++) {
@@ -197,9 +197,19 @@
         }
       }
 
-      // si ya estan todos los ejemplares en el carrito se desactiva el boton
+      // los que quedan son los disponibles menos los que ya estan en el carrito
+      const quedan = availableCopies - enCarrito;
+      if (state) {
+        if (quedan > 0) {
+          state.innerHTML = "Disponible (" + quedan + ")";
+        } else {
+          state.innerHTML = "No disponible";
+        }
+      }
+
+      // si no quedan ejemplares se desactiva el boton
       if (addButton) {
-        addButton.disabled = enCarrito >= availableCopies;
+        addButton.disabled = quedan <= 0;
       }
       const favorite = card.querySelector(".favorito");
       if (!title || !favorite) return;

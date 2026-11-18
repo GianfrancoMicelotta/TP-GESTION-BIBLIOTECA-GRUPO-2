@@ -56,8 +56,14 @@
       cart.push(title);
       app.saveList(app.storageKeys.cart, cart);
 
-      // si ya se agregaron todos los ejemplares se desactiva el boton
-      if (enCarrito + 1 >= disponibles) {
+      // actualizo el contador de disponibles de la tarjeta
+      const quedan = disponibles - (enCarrito + 1);
+      const estado = card.querySelector(".estado");
+      if (quedan > 0) {
+        estado.innerHTML = "Disponible (" + quedan + ")";
+      } else {
+        estado.innerHTML = "No disponible";
+        // si no quedan ejemplares se desactiva el boton
         target.disabled = true;
       }
       app.updateNavigationCounts();
