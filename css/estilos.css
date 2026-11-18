@@ -330,6 +330,216 @@ header .boton {
   text-align: center;
 }
 
+/*
+   CARRUSEL DE LIBROS DE LA PORTADA
+    */
+
+.carrusel {
+  padding: 60px 48px;
+  background-color: #fcfcfa;
+  color: black;
+}
+
+.carrusel h2 {
+  margin: 0 0 32px;
+  font-family: Georgia, serif;
+  font-size: 30px;
+  font-weight: normal;
+}
+
+.carrusel-contenedor {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+/* La ventana recorta los libros que quedan a los costados */
+.carrusel-ventana {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  padding: 12px 0 28px;
+}
+
+/* Todos los libros ocupan el mismo lugar (el del libro principal)
+   y cada clase los corre hacia un costado */
+.carrusel-diapositivas {
+  display: grid;
+  width: 64%;
+  margin: 0 auto;
+}
+
+.carrusel-diapositiva {
+  grid-area: 1 / 1;
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.6s ease, opacity 0.6s ease;
+}
+
+/* Libro principal, en el centro */
+.carrusel-diapositiva.activo {
+  z-index: 1;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Libro siguiente: queda a la derecha y se ve solo un pedazo de la portada */
+.carrusel-diapositiva.siguiente {
+  opacity: 0.4;
+  transform: translateX(calc(100% + 24px));
+}
+
+/* Libro anterior: se corre a la izquierda lo justo para que asome el final de la portada */
+.carrusel-diapositiva.anterior {
+  opacity: 0.4;
+  transform: translateX(-234px);
+}
+
+.carrusel-diapositiva.oculto-derecha {
+  transform: translateX(calc(200% + 48px));
+}
+
+.carrusel-diapositiva.oculto-izquierda {
+  transform: translateX(calc(-100% - 234px));
+}
+
+/* Cuando un libro salta de un costado al otro no se anima el movimiento */
+.carrusel-diapositiva.sin-transicion {
+  transition: opacity 0.6s ease;
+}
+
+/* En los libros de los costados solo se ve la portada */
+.carrusel-datos {
+  transition: opacity 0.3s ease;
+}
+
+.carrusel-diapositiva:not(.activo) .carrusel-datos {
+  opacity: 0;
+}
+
+.carrusel-diapositiva > a {
+  flex-shrink: 0;
+}
+
+.carrusel-diapositiva img {
+  display: block;
+  width: 210px;
+  height: 320px;
+  object-fit: cover;
+  border-radius: 4px;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.25);
+}
+
+.carrusel-datos h3 {
+  margin: 0 0 8px;
+  font-family: Georgia, serif;
+  font-size: 28px;
+  font-weight: normal;
+}
+
+.carrusel-datos p {
+  margin: 0 0 12px;
+  line-height: 1.5;
+}
+
+.carrusel-autor {
+  color: #65717c;
+  font-style: italic;
+}
+
+.carrusel-flecha {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgb(26, 30, 129);
+  border-radius: 50%;
+  background-color: white;
+  color: rgb(26, 30, 129);
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.carrusel-flecha:hover {
+  background-color: rgb(26, 30, 129);
+  color: white;
+}
+
+.carrusel-controles {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  margin-top: 32px;
+}
+
+.carrusel-puntos {
+  display: flex;
+  gap: 10px;
+}
+
+.carrusel-punto {
+  width: 12px;
+  height: 12px;
+  padding: 0;
+  border: 1px solid rgb(26, 30, 129);
+  border-radius: 50%;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.carrusel-punto.activo {
+  background-color: rgb(26, 30, 129);
+}
+
+.carrusel-pausa {
+  padding: 6px 16px;
+  border: 1px solid rgb(26, 30, 129);
+  border-radius: 5px;
+  background-color: white;
+  color: rgb(26, 30, 129);
+  cursor: pointer;
+}
+
+.carrusel-pausa.pausado {
+  background-color: rgb(26, 30, 129);
+  color: white;
+}
+
+/* En pantallas medianas y chicas el texto va debajo de la portada */
+@media (max-width: 900px) {
+  .carrusel-diapositivas {
+    width: 60%;
+  }
+
+  .carrusel-diapositiva {
+    flex-direction: column;
+    gap: 20px;
+    text-align: center;
+  }
+
+  /* Acá la portada está centrada, así que se corre medio libro más media portada */
+  .carrusel-diapositiva.siguiente {
+    transform: translateX(calc(50% + 105px + 16px));
+  }
+
+  .carrusel-diapositiva.anterior {
+    transform: translateX(calc(-50% - 105px - 16px));
+  }
+
+  .carrusel-diapositiva.oculto-derecha {
+    transform: translateX(calc(150% + 105px + 32px));
+  }
+
+  .carrusel-diapositiva.oculto-izquierda {
+    transform: translateX(calc(-150% - 105px - 32px));
+  }
+}
+
 /* 
    SECCIÓN DE REGISTRO
     */
@@ -956,6 +1166,29 @@ body.oscuro .tarjeta {
   border-color: #333b48;
 }
 
+body.oscuro .carrusel {
+  background-color: #1b212b;
+  color: #eeeeee;
+}
+
+body.oscuro .carrusel-flecha,
+body.oscuro .carrusel-pausa {
+  background-color: #1b212b;
+  color: #b7c9f0;
+  border-color: #7189ba;
+}
+
+body.oscuro .carrusel-punto {
+  border-color: #7189ba;
+}
+
+body.oscuro .carrusel-punto.activo,
+body.oscuro .carrusel-pausa.pausado {
+  background-color: #7189ba;
+  color: #12161d;
+}
+
+body.oscuro .carrusel-autor,
 body.oscuro .presentacion-descripcion,
 body.oscuro .libro p,
 body.oscuro.pagina-seccion main > p {
@@ -1203,6 +1436,36 @@ button:disabled {
 
   .estante-libro {
     grid-template-columns: 1fr;
+  }
+
+  .carrusel {
+    padding: 40px 16px;
+  }
+
+  .carrusel-contenedor {
+    gap: 4px;
+  }
+
+  .carrusel-diapositivas {
+    width: 60%;
+  }
+
+  .carrusel-diapositiva img {
+    width: 140px;
+    height: 215px;
+  }
+
+  .carrusel-diapositiva.siguiente {
+    transform: translateX(calc(50% + 70px + 10px));
+  }
+
+  .carrusel-diapositiva.anterior {
+    transform: translateX(calc(-50% - 70px - 10px));
+  }
+
+  .carrusel-flecha {
+    width: 32px;
+    height: 32px;
   }
 
   .registro {
