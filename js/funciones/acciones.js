@@ -37,20 +37,35 @@
     if (card && target.matches(".boton") && target.textContent.toLowerCase().includes("añadir")) {
       const title = card.querySelector("h3").textContent.trim();
       const cart = app.readList(app.storageKeys.cart, app.defaultCart);
-      if (cart.includes(title)) {
-        target.textContent = "Ya está en el carrito";
+      const disponibles = app.getAvailableCopies(title);
+
+      // cuento cuantas veces esta este libro en el carrito
+      let enCarrito = 0;
+      for (let i = 0; i < cart.length; i++) {
+        if (cart[i] === title) {
+          enCarrito++;
+        }
+      }
+
+      if (enCarrito >= disponibles) {
+        app.notify("No hay más ejemplares disponibles de " + title);
         target.disabled = true;
         return;
       }
-      if (app.getAvailableCopies(title) < 1) {
-        app.notify(`No hay ejemplares disponibles de "${title}".`);
-        target.disabled = true;
-        return;
-      }
+
       cart.push(title);
       app.saveList(app.storageKeys.cart, cart);
-      target.textContent = "Ya está en el carrito";
-      target.disabled = true;
+
+      // actualizo el contador de disponibles de la tarjeta
+      const quedan = disponibles - (enCarrito + 1);
+      const estado = card.querySelector(".estado");
+      if (quedan > 0) {
+        estado.innerHTML = "Disponible (" + quedan + ")";
+      } else {
+        estado.innerHTML = "No disponible";
+        // si no quedan ejemplares se desactiva el boton
+        target.disabled = true;
+      }
       app.updateNavigationCounts();
       app.notify(`"${title}" se agregó al carrito.`);
       return;
