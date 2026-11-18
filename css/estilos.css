@@ -907,10 +907,16 @@ body.oscuro .ayuda-credenciales {
 }
 
 .tarjeta {
+  display: flex;
+  flex-direction: column;
   width: 220px;
   background-color: white;
   border: 1px solid #cccccc;
   border-radius: 8px;
+}
+
+.tarjeta .boton {
+  border-radius: 10px;
 }
 
 .portada {
@@ -943,6 +949,27 @@ body.pagina-seccion .portada {
 
 .datos {
   padding: 12px;
+}
+
+/* Los datos de la tarjeta ocupan todo el alto disponible
+   para que el corazón y "Añadir al carrito" queden siempre abajo */
+.tarjeta .datos {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.tarjeta .datos > p {
+  margin-top: 0;
+}
+
+.tarjeta .estado {
+  align-self: flex-start;
+  margin-bottom: 16px;
+}
+
+.tarjeta .datos > p:last-child {
+  margin-top: auto;
 }
 
 img.portada {
