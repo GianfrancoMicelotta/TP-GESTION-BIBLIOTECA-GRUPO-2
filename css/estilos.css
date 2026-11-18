@@ -827,6 +827,21 @@ td {
   border-bottom: 1px solid #cccccc;
 }
 
+.acciones-inventario {
+  white-space: nowrap;
+}
+
+.boton-cantidad {
+  min-width: 36px;
+  margin: 0 3px;
+  padding: 5px 10px;
+}
+
+.boton-cantidad:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
 /* 
    FOOTER PRINCIPAL
     */
