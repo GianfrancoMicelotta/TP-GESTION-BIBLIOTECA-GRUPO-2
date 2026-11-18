@@ -206,7 +206,7 @@ header .boton {
   display: inline-block;
   padding: 15px 24px;
   background-color: white;
-  color: #243e59;
+  color: #1a3859;
   border-radius: 3px;
   font-family: Arial, sans-serif;
   font-weight: bold;
@@ -217,7 +217,8 @@ header .boton {
 .portada-acciones a:hover {
   transform: translateY(-2px);
   transition: transform 0.5s ease;
-  box-shadow: 0 6px 10px rgb(0, 0, 0);
+  box-shadow: 0 6px 10px rgb(4, 70, 101);
+  background-color: #c3c2c2;
 }
 
 /* 
@@ -620,6 +621,36 @@ body.pagina-seccion textarea {
 .selector-vista .boton {
   margin: 0;
   padding: 8px 14px;
+  border: 1px solid rgb(26, 30, 129);
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.selector-vista .boton[aria-pressed="true"] {
+  background-color: rgb(26, 30, 129);
+  color: #ffffff;
+  box-shadow: 0 2px 6px rgba(26, 30, 129, 0.3);
+}
+
+.selector-vista .boton[aria-pressed="false"] {
+  background-color: #ffffff;
+  color: rgb(26, 30, 129);
+}
+
+.selector-vista .boton:hover {
+  transform: translateY(-1px);
+}
+
+body.oscuro .selector-vista .boton[aria-pressed="true"] {
+  background-color: #365a9c;
+  border-color: #8aa9e6;
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+}
+
+body.oscuro .selector-vista .boton[aria-pressed="false"] {
+  background-color: #1b212b;
+  border-color: #7189ba;
+  color: #b7c9f0;
 }
 
 .catalogo-lista .items {
@@ -994,8 +1025,47 @@ body.oscuro.pagina-seccion > header .boton-claro {
   border-color: #7189ba;
 }
 
+body.oscuro .portada-acciones a {
+  background-color: #1a3859;
+  color: #ffffff;
+  border-color: #000000;
+}
+
+body.oscuro .portada-acciones a:hover {
+  background-color: #092f57;
+  color: #ffffff;
+}
+
+body.oscuro .navegacion .boton-login:hover,
+body.oscuro .navegacion .boton-registro:hover {
+  box-shadow: 0 4px 8px rgb(126, 125, 125);
+}
+
 body.oscuro .estado {
   color: #eeeeee;
+}
+
+body.oscuro.pagina-seccion input,
+body.oscuro.pagina-seccion select,
+body.oscuro.pagina-seccion textarea {
+  background-color: #12161d;
+  color: #f5f7fa;
+  border-color: #718096;
+  caret-color: #ffffff;
+}
+
+body.oscuro.pagina-seccion input::placeholder,
+body.oscuro.pagina-seccion textarea::placeholder {
+  color: #b7c0cc;
+  opacity: 1;
+}
+
+body.oscuro.pagina-seccion input:-webkit-autofill,
+body.oscuro.pagina-seccion input:-webkit-autofill:hover,
+body.oscuro.pagina-seccion input:-webkit-autofill:focus {
+  -webkit-text-fill-color: #f5f7fa;
+  box-shadow: 0 0 0 1000px #12161d inset;
+  caret-color: #ffffff;
 }
 
 body.oscuro th,

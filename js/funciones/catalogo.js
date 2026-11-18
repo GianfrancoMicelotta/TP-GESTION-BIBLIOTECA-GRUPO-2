@@ -78,7 +78,11 @@
     if (!list) return;
 
     app.ensureInventory();
-    const cart = app.readList(app.storageKeys.cart, app.defaultCart);
+    const storedCart = app.readList(app.storageKeys.cart, app.defaultCart);
+    const cart = [...new Set(storedCart)];
+    if (cart.length !== storedCart.length) {
+      app.saveList(app.storageKeys.cart, cart);
+    }
     const books = app.getPageBooks();
     list.replaceChildren();
     cart.forEach((title) => {
@@ -179,7 +183,11 @@
         .map((button) => button.closest(".tarjeta")?.querySelector("h3")?.textContent.trim())
         .filter(Boolean),
     );
-    const cart = app.readList(app.storageKeys.cart, app.defaultCart);
+    const storedCart = app.readList(app.storageKeys.cart, app.defaultCart);
+    const cart = [...new Set(storedCart)];
+    if (cart.length !== storedCart.length) {
+      app.saveList(app.storageKeys.cart, cart);
+    }
 
     document.querySelectorAll(".tarjeta").forEach((card) => {
       const title = card.querySelector("h3")?.textContent.trim();
@@ -196,7 +204,10 @@
       favorite.classList.toggle("activo", isFavorite);
       favorite.textContent = isFavorite ? "♥" : "♡";
       favorite.setAttribute("aria-label", `${isFavorite ? "Quitar" : "Agregar"} ${title} ${isFavorite ? "de" : "a"} favoritos`);
-      if (addButton && cart.includes(title)) addButton.textContent = "Agregar otra vez";
+      if (addButton && cart.includes(title)) {
+        addButton.textContent = "Ya está en el carrito";
+        addButton.disabled = true;
+      }
     });
 
     app.setCatalogView(localStorage.getItem(app.storageKeys.catalogView) || "tarjetas");
