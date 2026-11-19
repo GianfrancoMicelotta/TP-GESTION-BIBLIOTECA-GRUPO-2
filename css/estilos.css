@@ -710,6 +710,10 @@ body.pagina-seccion > header .boton-login {
   color: rgb(26, 30, 129);
 }
 
+body.pagina-seccion > header > a.boton-enlace-auth {
+  border-radius: 5px;
+}
+
 body.pagina-seccion > header .boton-tema {
   padding: 0;
   border: 0;
@@ -1430,6 +1434,12 @@ body.oscuro.pagina-seccion > header .boton-claro {
   background-color: #1b212b;
   color: #b7c9f0;
   border-color: #7189ba;
+}
+
+body.oscuro.pagina-seccion > header > a.boton-enlace-auth {
+  background-color: rgb(26, 30, 129);
+  border: 1px solid rgb(26, 30, 129);
+  color: #ffffff;
 }
 
 body.oscuro .portada-acciones a {
