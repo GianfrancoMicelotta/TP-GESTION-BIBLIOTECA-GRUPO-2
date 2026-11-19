@@ -15,33 +15,37 @@
         class="boton boton-claro boton-tema"
         type="button"
         title="Cambiar tema"
+        aria-label="Cambiar tema"
       >
-        <img src="img/iconoTema.png" alt="Cambiar tema" />
+        <img src="img/iconoTema.png" alt="" />
       </button>
     </header>
 
     <main>
       <section class="caja">
         <h1>Iniciar sesión</h1>
-        <form>
+        <form id="form-login">
           <label for="usuario">Usuario o correo</label>
           <input
             type="text"
             id="usuario"
+            required
             placeholder="Ingrese su usuario o correo"
           />
           <label for="clave">Contraseña</label>
           <input
             type="password"
             id="clave"
+            required
             placeholder="Ingrese su contraseña"
           />
-          <a class="boton" href="catalogo.html">Ingresar</a>
+          <button class="boton" type="submit">Ingresar</button>
         </form>
-        <p>
-          ¿No hay administrador?
-          <a href="registro-admin.html">Crear el primer administrador</a>
+        <p id="primer-admin-info">
+          ¿Primera instalación?
+          <a id="enlace-primer-admin" href="registro-admin.html">Crear el primer administrador</a>
         </p>
+        <!-- <p id="credenciales-admin" class="ayuda-credenciales"></p> -->
       </section>
     </main>
     <footer id="footer-chiquito">
@@ -49,5 +53,11 @@
         <h4>2026 Gestor de Biblioteca - PW1-20262C</h4>
       </div>
     </footer>
+    <script src="js/funciones/estado.js" defer></script>
+    <script src="js/funciones/catalogo.js" defer></script>
+    <script src="js/funciones/administracion.js" defer></script>
+    <script src="js/funciones/cuenta.js" defer></script>
+    <script src="js/funciones/acciones.js" defer></script>
+    <script src="js/app.js" defer></script>
   </body>
 </html>

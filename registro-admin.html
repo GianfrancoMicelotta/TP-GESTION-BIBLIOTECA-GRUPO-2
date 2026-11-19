@@ -11,30 +11,31 @@
     <a class="logo" href="index.html">libraryHub</a>
     <a href="login.html">Iniciar sesión</a>
     <a class="boton" href="registro.html">Registrarse</a>
-    <button class="boton boton-claro boton-tema" type="button" title="Cambiar tema">
-    <img src="img/iconoTema.png" alt="Cambiar tema">
-</button>
+    <button class="boton boton-claro boton-tema" type="button" title="Cambiar tema" aria-label="Cambiar tema">
+    <img src="img/iconoTema.png" alt="">
+    </button>
   </header>
   <main>
     <section class="caja">
       <h1>Creá el primer administrador</h1>
-      <p>No hay ningún administrador registrado. Esta cuenta podrá cargar libros.</p>
-      <form>
+      <p id="sin-admin-info">No hay ningún administrador registrado. Esta cuenta podrá cargar libros.</p>
+      <p id="admin-ya-creado" hidden>Ya hay un administrador registrado. <a href="login.html">Iniciá sesión</a> para continuar.</p>
+      <form id="form-registro-admin">
         <label for="nombre">Nombre completo</label>
-        <input type="text" id="nombre">
+        <input type="text" id="nombre" required>
         <label for="correo">Correo</label>
-        <input type="email" id="correo">
+        <input type="email" id="correo" required>
         <label for="usuario">Usuario</label>
-        <input type="text" id="usuario">
+        <input type="text" id="usuario" required>
         <label for="clave">Contraseña</label>
-        <input type="password" id="clave">
+        <input type="password" id="clave" minlength="8" required>
         <label for="clave2">Repetir contraseña</label>
-        <input type="password" id="clave2">
+        <input type="password" id="clave2" minlength="8" required>
         <label for="perfil">Perfil</label>
         <select id="perfil" disabled>
           <option>Administrador</option>
         </select>
-        <a class="boton" href="admin.html">Crear administrador</a>
+        <button class="boton" type="submit">Crear administrador</button>
       </form>
     </section>
   </main>
@@ -43,5 +44,11 @@
             <h4>2026 Gestor de Biblioteca - PW1-20262C</h4>
          </div>
   </footer>
+  <script src="js/funciones/estado.js" defer></script>
+  <script src="js/funciones/catalogo.js" defer></script>
+  <script src="js/funciones/administracion.js" defer></script>
+  <script src="js/funciones/cuenta.js" defer></script>
+  <script src="js/funciones/acciones.js" defer></script>
+  <script src="js/app.js" defer></script>
 </body>
 </html>

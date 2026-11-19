@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Finalizar compra - libraryHub</title>
+  <link rel="stylesheet" href="css/estilos.css">
+  <script src="https://kit.fontawesome.com/b3f407f311.js" crossorigin="anonymous"></script>
+</head>
+<body class="pagina-seccion">
+  <header>
+    <a class="logo" href="catalogo.html">libraryHub</a>
+    <a href="catalogo.html">Catálogo</a>
+    <a href="mi-cuenta.html">Mi cuenta</a>
+    <a href="favoritos.html">Favoritos</a>
+    <a href="carrito.html">Mi carrito</a>
+    <div class="selector" hidden>
+      <a href="admin.html">Administrador</a><a href="catalogo.html">Área de usuario</a>
+    </div>
+    <button class="boton boton-claro boton-tema" type="button" title="Cambiar tema" aria-label="Cambiar tema">
+      <img src="img/iconoTema.png" alt="">
+    </button>
+    <a href="index.html" data-logout>Salir</a>
+  </header>
+
+  <main>
+    <h1>Finalizar compra</h1>
+    <p>Completá tus datos para confirmar el pedido.</p>
+
+    <section class="caja" id="checkout-vacio" hidden>
+      <p>Tu carrito está vacío.</p>
+      <a class="boton" href="carrito.html">Volver al carrito</a>
+    </section>
+
+    <section class="caja" id="checkout-resumen">
+      <h2>Resumen del pedido</h2>
+      <ul id="checkout-libros"></ul>
+      <p id="checkout-cantidad"></p>
+      <p>Precio de muestra: $10.000 por libro</p>
+      <p id="checkout-total"></p>
+    </section>
+
+    <section class="caja" id="checkout-datos">
+      <h2>Datos de contacto y entrega</h2>
+      <p>Los datos de contacto y entrega se guardan en este navegador para recuperarlos en tu próxima compra.</p>
+      <form id="form-finalizar-compra">
+        <label for="checkout-nombre">Nombre completo</label>
+        <input type="text" id="checkout-nombre" name="name" autocomplete="name" required>
+
+        <label for="checkout-correo">Correo electrónico</label>
+        <input type="email" id="checkout-correo" name="email" autocomplete="email" required>
+
+        <label for="checkout-telefono">Teléfono</label>
+        <input type="tel" id="checkout-telefono" name="phone" autocomplete="tel" required>
+
+        <label for="checkout-entrega">Modalidad de entrega</label>
+        <select id="checkout-entrega" name="delivery" required>
+          <option value="retiro">Retiro en biblioteca</option>
+          <option value="domicilio">Entrega a domicilio</option>
+        </select>
+
+        <fieldset id="checkout-direccion" hidden>
+          <legend>Dirección de entrega</legend>
+          <label for="checkout-calle">Calle y número</label>
+          <input type="text" id="checkout-calle" name="street" autocomplete="street-address">
+
+          <label for="checkout-ciudad">Ciudad</label>
+          <input type="text" id="checkout-ciudad" name="city" autocomplete="address-level2">
+
+          <label for="checkout-codigo-postal">Código postal</label>
+          <input type="text" id="checkout-codigo-postal" name="postalCode" autocomplete="postal-code">
+        </fieldset>
+
+        <label for="checkout-pago">Forma de pago preferida</label>
+        <select id="checkout-pago" name="payment" required>
+          <option value="tarjeta" selected>Tarjeta de crédito/débito</option>
+          <option value="efectivo">Efectivo al retirar o recibir</option>
+          <option value="transferencia">Transferencia (se coordina por correo)</option>
+        </select>
+
+        <fieldset id="checkout-tarjeta" hidden>
+          <legend>Datos de tarjeta (solo simulación)</legend>
+          <label for="checkout-titular">Titular de la tarjeta</label>
+          <input type="text" id="checkout-titular" autocomplete="off">
+
+          <label for="checkout-numero-tarjeta">Número de tarjeta</label>
+          <input type="text" id="checkout-numero-tarjeta" inputmode="numeric" autocomplete="off" pattern="[0-9 ]{13,23}" minlength="13" maxlength="23">
+
+          <label for="checkout-vencimiento">Vencimiento (MM/AA)</label>
+          <input type="text" id="checkout-vencimiento" inputmode="numeric" autocomplete="off" placeholder="MM/AA" pattern="(0[1-9]|1[0-2])/[0-9]{2}" maxlength="5">
+
+          <label for="checkout-codigo-seguridad">Código de seguridad</label>
+          <input type="text" id="checkout-codigo-seguridad" inputmode="numeric" autocomplete="off" pattern="[0-9]{3,4}" minlength="3" maxlength="4">
+        </fieldset>
+
+        <label for="checkout-notas">Indicaciones adicionales (opcional)</label>
+        <textarea id="checkout-notas" name="notes" rows="3"></textarea>
+
+        <p id="checkout-error" role="alert" hidden></p>
+        <a class="boton boton-claro" href="carrito.html">Volver al carrito</a>
+        <button class="boton" type="submit">Confirmar compra</button>
+      </form>
+    </section>
+
+    <section class="caja" id="checkout-confirmado" hidden>
+      <h2>Pedido confirmado</h2>
+      <p>El pedido quedó registrado. Esta demostración no realizó ningún cobro.</p>
+      <a class="boton" href="catalogo.html">Volver al catálogo</a>
+    </section>
+  </main>
+
+  <footer id="footer-principal">
+    <div>
+      <h4>Contactanos</h4>
+      <p>Email: contacto@libraryhub.com</p>
+      <p>Email: soportelibraryhub@gmail.com</p>
+    </div>
+    <div>
+      <h4>Redes Sociales</h4>
+      <ul>
+        <li><a href="https://www.unlam.edu.ar/"><i class="fa-brands fa-facebook"></i> Facebook</a></li>
+        <li><a href="https://www.unlam.edu.ar/"><i class="fa-brands fa-instagram"></i> Instagram</a></li>
+        <li><a href="https://www.unlam.edu.ar/"><i class="fa-brands fa-twitter"></i> Twitter</a></li>
+      </ul>
+    </div>
+  </footer>
+  <script src="js/funciones/estado.js" defer></script>
+  <script src="js/funciones/catalogo.js" defer></script>
+  <script src="js/funciones/administracion.js" defer></script>
+  <script src="js/funciones/cuenta.js" defer></script>
+  <script src="js/funciones/acciones.js" defer></script>
+  <script src="js/funciones/checkout.js" defer></script>
+  <script src="js/app.js" defer></script>
+</body>
+</html>

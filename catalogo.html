@@ -9,22 +9,28 @@
 </head>
 <body class="pagina-seccion">
   <header>
-    <a class="logo" href="index.html">libraryHub</a>
+    <a class="logo" href="catalogo.html">libraryHub</a>
     <a href="favoritos.html">Favoritos</a>
     <a href="mi-cuenta.html">Mi cuenta</a>
     <a href="carrito.html">Mi carrito (2)</a>
-    <div class="selector">
-      <a href="admin.html">Administrador</a><a class="activo" href="catalogo.html">Usuario</a>
+    <div class="selector" hidden>
+      <a href="admin.html">Administrador</a><a class="activo" href="catalogo.html" aria-current="page">Área de usuario</a>
     </div>
-   <button class="boton boton-claro boton-tema" type="button" title="Cambiar tema">
-    <img src="img/iconoTema.png" alt="Cambiar tema">
+   <button class="boton boton-claro boton-tema" type="button" title="Cambiar tema" aria-label="Cambiar tema">
+    <img src="img/iconoTema.png" alt="">
    </button>
+   <a href="index.html" data-logout>Salir</a>
   </header>
 
-  <main>
+  <main id="catalogo">
     <h1>Catálogo</h1>
     <p>Explorá los libros disponibles y pedí los que quieras leer.</p>
-    <input type="search" placeholder="Buscar por título o autor">
+    <label class="solo-lector" for="busqueda-catalogo">Buscar por título o autor</label>
+    <input type="search" id="busqueda-catalogo" placeholder="Buscar por título o autor">
+    <div class="selector-vista" role="group" aria-label="Vista del catálogo">
+      <button class="boton" id="vista-tarjetas" type="button" aria-pressed="true">Tarjetas</button>
+      <button class="boton boton-claro" id="vista-lista" type="button" aria-pressed="false">Lista</button>
+    </div>
     
 
     <section aria-labelledby="genero-fantasia">
@@ -253,5 +259,11 @@
          </ul>
       </div>
    </footer>
+  <script src="js/funciones/estado.js" defer></script>
+  <script src="js/funciones/catalogo.js" defer></script>
+  <script src="js/funciones/administracion.js" defer></script>
+  <script src="js/funciones/cuenta.js" defer></script>
+  <script src="js/funciones/acciones.js" defer></script>
+  <script src="js/app.js" defer></script>
 </body>
 </html>
