@@ -2,6 +2,99 @@
   "use strict";
 
   const app = window.LibraryHub;
+  const getValidationMessage = (field) => {
+    const { validity } = field;
+    const label = field.labels?.[0]?.textContent.trim();
+    if (validity.customError) return field.validationMessage;
+    if (validity.valueMissing) {
+      return field.type === "checkbox" || field.type === "radio"
+        ? "Seleccioná una opción."
+        : `Completá ${label ? `el campo «${label}»` : "este campo"}.`;
+    }
+    if (validity.typeMismatch && field.type === "email") {
+      return "Ingresá un correo electrónico válido, por ejemplo nombre@dominio.com.";
+    }
+    if (validity.typeMismatch && field.type === "url") {
+      return "Ingresá una dirección web válida.";
+    }
+    if (validity.patternMismatch) {
+      if (field.id === "checkout-numero-tarjeta") {
+        return "Ingresá entre 13 y 19 dígitos; podés separarlos con espacios.";
+      }
+      if (field.id === "checkout-vencimiento") {
+        return "Usá el formato MM/AA, por ejemplo 08/28.";
+      }
+      if (field.id === "checkout-codigo-seguridad") {
+        return "Ingresá un código de 3 o 4 dígitos.";
+      }
+      return "Revisá el formato del valor ingresado.";
+    }
+    if (validity.tooShort) {
+      return `Ingresá al menos ${field.minLength} caracteres.`;
+    }
+    if (validity.tooLong) {
+      return `Ingresá como máximo ${field.maxLength} caracteres.`;
+    }
+    if (validity.rangeUnderflow) {
+      return `Ingresá un valor igual o mayor a ${field.min}.`;
+    }
+    if (validity.rangeOverflow) {
+      return `Ingresá un valor igual o menor a ${field.max}.`;
+    }
+    if (validity.stepMismatch || validity.badInput) {
+      return "Ingresá un valor válido.";
+    }
+    return "Revisá el valor ingresado.";
+  };
+
+  app.showValidationMessage = function showValidationMessage(field, message) {
+    field.setCustomValidity(message);
+    const errorId = `${field.id}-mensaje-validacion`;
+    let error = document.getElementById(errorId);
+    if (!error) {
+      error = document.createElement("p");
+      error.id = errorId;
+      error.className = "mensaje-validacion";
+      error.setAttribute("role", "alert");
+      field.insertAdjacentElement("afterend", error);
+    }
+    error.textContent = message;
+    field.setAttribute("aria-invalid", "true");
+    const descriptions = new Set((field.getAttribute("aria-describedby") || "").split(/\s+/).filter(Boolean));
+    descriptions.add(errorId);
+    field.setAttribute("aria-describedby", [...descriptions].join(" "));
+  };
+
+  const clearValidationMessage = (event) => {
+    const field = event.target;
+    if (typeof field.setCustomValidity !== "function") return;
+    field.setCustomValidity("");
+    const errorId = `${field.id}-mensaje-validacion`;
+    document.getElementById(errorId)?.remove();
+    field.removeAttribute("aria-invalid");
+    const descriptions = (field.getAttribute("aria-describedby") || "")
+      .split(/\s+/)
+      .filter((description) => description && description !== errorId);
+    if (descriptions.length > 0) field.setAttribute("aria-describedby", descriptions.join(" "));
+    else field.removeAttribute("aria-describedby");
+  };
+  document.addEventListener("input", clearValidationMessage, true);
+  document.addEventListener("change", clearValidationMessage, true);
+  document.querySelectorAll("form").forEach((form) => {
+    form.noValidate = true;
+  });
+  document.addEventListener("submit", (event) => {
+    const form = event.target;
+    const invalidField = [...form.elements].find((field) =>
+      field.willValidate && field.validity && !field.validity.valid,
+    );
+    if (!invalidField) return;
+
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    app.showValidationMessage(invalidField, getValidationMessage(invalidField));
+    invalidField.focus();
+  }, true);
   const defaultAdmin = {
     name: "Administrador",
     email: "admin@libraryhub.local",
@@ -69,7 +162,7 @@
 
   app.guardPage = function guardPage() {
     const file = window.location.pathname.split("/").pop().toLowerCase();
-    const protectedPages = ["catalogo.html", "favoritos.html", "carrito.html", "mi-cuenta.html", "admin.html"];
+    const protectedPages = ["catalogo.html", "favoritos.html", "carrito.html", "finalizar-compra.html", "mi-cuenta.html", "admin.html"];
     if (!protectedPages.includes(file)) return true;
 
     const profile = JSON.parse(localStorage.getItem(app.storageKeys.profile) || "null");
@@ -86,8 +179,12 @@
 
   app.updateRoleNavigation = function updateRoleNavigation() {
     const profile = JSON.parse(localStorage.getItem(app.storageKeys.profile) || "null");
-    document.querySelectorAll('a[href="admin.html"]').forEach((link) => {
-      link.hidden = profile?.role !== "admin";
+    const isAdmin = profile?.role === "admin";
+    const isAdminPage = window.location.pathname.split("/").pop().toLowerCase() === "admin.html";
+    document.querySelectorAll(".selector").forEach((selector) => {
+      selector.hidden = !isAdmin;
+      selector.querySelector('a[href="admin.html"]')?.classList.toggle("activo", isAdminPage);
+      selector.querySelector('a[href="catalogo.html"]')?.classList.toggle("activo", !isAdminPage);
     });
   };
 
@@ -129,7 +226,6 @@
       strong.textContent = label;
       paragraph.append(strong, ` ${values[index] || ""}`);
     });
-    app.renderFavorites();
   };
 
   app.setupForms = function setupForms() {
@@ -186,8 +282,10 @@
           const password = document.querySelector("#clave").value;
           const confirmation = document.querySelector("#clave2").value;
           if (password !== confirmation) {
-            document.querySelector("#clave2").setCustomValidity("Las contraseñas no coinciden.");
-            document.querySelector("#clave2").reportValidity();
+            app.showValidationMessage(
+              document.querySelector("#clave2"),
+              "Las contraseñas no coinciden.",
+            );
             return;
           }
           document.querySelector("#clave2").setCustomValidity("");
@@ -232,6 +330,11 @@
     document.querySelector("#form-libro")?.addEventListener("submit", (event) => {
       event.preventDefault();
       app.addBook(event.currentTarget);
+    });
+
+    document.querySelector("#portada")?.addEventListener("change", (event) => {
+      const file = event.currentTarget.files[0];
+      document.querySelector("#nombre-portada").textContent = file?.name || "No se seleccionó ningún archivo";
     });
   };
 

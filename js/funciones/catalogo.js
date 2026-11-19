@@ -94,7 +94,7 @@
     confirmButton.className = "boton";
     confirmButton.id = "confirmar-compra";
     confirmButton.type = "button";
-    confirmButton.textContent = `Confirmar compra (${cart.length} ${cart.length === 1 ? "libro" : "libros"})`;
+    confirmButton.textContent = `Continuar (${cart.length} ${cart.length === 1 ? "libro" : "libros"})`;
     confirmButton.disabled = cart.length === 0;
     list.append(confirmButton);
   };
@@ -248,6 +248,29 @@
   };
 
   const defaultInventory = {
+    "El Hobbit": 2,
+    "Harry Potter y la piedra filosofal": 3,
+    "La historia interminable": 4,
+    "El nombre del viento": 5,
+    "Asesinato en el Orient Express": 2,
+    "El sabueso de los Baskerville": 1,
+    "La chica del tren": 3,
+    "Los hombres que no amaban a las mujeres": 4,
+    "Fahrenheit 451": 5,
+    Dune: 2,
+    "El fin de la eternidad": 3,
+    "La máquina del tiempo": 4,
+    "Orgullo y prejuicio": 5,
+    "Como agua para chocolate": 2,
+    "Yo antes de ti": 3,
+    "Bajo la misma estrella": 4,
+    Rayuela: 1,
+    "El Aleph": 5,
+    Ficciones: 0,
+    "El túnel": 1,
+  };
+
+  const previousDefaultInventory = {
     "El Hobbit": 1,
     "Harry Potter y la piedra filosofal": 1,
     "La historia interminable": 1,
@@ -269,6 +292,7 @@
     Ficciones: 0,
     "El túnel": 1,
   };
+  const currentInventoryVersion = "2";
 
   app.ensureInventory = function ensureInventory() {
     const stored = localStorage.getItem(app.storageKeys.inventory);
@@ -276,10 +300,18 @@
     if (typeof inventory !== "object" || inventory === null || Array.isArray(inventory)) {
       throw new TypeError("El inventario guardado no tiene un formato válido.");
     }
+    if (stored !== null && localStorage.getItem(app.storageKeys.inventoryVersion) !== currentInventoryVersion) {
+      Object.keys(previousDefaultInventory).forEach((title) => {
+        if (inventory[title] === previousDefaultInventory[title]) {
+          inventory[title] = defaultInventory[title];
+        }
+      });
+    }
     app.readList(app.storageKeys.books, []).forEach((book) => {
       if (!Number.isInteger(inventory[book.title])) inventory[book.title] = Number(book.copies);
     });
     app.saveInventory(inventory);
+    localStorage.setItem(app.storageKeys.inventoryVersion, currentInventoryVersion);
     return inventory;
   };
 
