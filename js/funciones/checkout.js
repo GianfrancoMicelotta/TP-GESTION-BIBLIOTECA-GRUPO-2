@@ -2,7 +2,6 @@
   "use strict";
 
   const app = window.LibraryHub;
-  const demoUnitPrice = 10000;
   const formatPrice = new Intl.NumberFormat("es-AR", {
     style: "currency",
     currency: "ARS",
@@ -103,15 +102,29 @@
     cart.forEach((title) => {
       quantities.set(title, (quantities.get(title) || 0) + 1);
     });
+    const books = app.getPageBooks();
+    let total = 0;
+    const booksWithoutPrice = [];
     quantities.forEach((quantity, title) => {
       const item = document.createElement("li");
-      item.textContent = `${title} × ${quantity} — ${formatPrice.format(demoUnitPrice * quantity)}`;
+      const customBook = books.find((book) => book.title === title);
+      const unitPrice = app.getBookPrice(title)
+        ?? (Number.isSafeInteger(customBook?.price) ? customBook.price : null);
+      if (unitPrice === null) {
+        item.textContent = `${title} × ${quantity} — Precio no disponible`;
+        booksWithoutPrice.push(title);
+      } else {
+        const subtotal = unitPrice * quantity;
+        item.textContent = `${title} × ${quantity} — ${formatPrice.format(subtotal)}`;
+        total += subtotal;
+      }
       bookList.append(item);
     });
     document.querySelector("#checkout-cantidad").textContent =
       `${cart.length} ${cart.length === 1 ? "libro" : "libros"}`;
-    document.querySelector("#checkout-total").textContent =
-      `Total de muestra: ${formatPrice.format(demoUnitPrice * cart.length)}`;
+    document.querySelector("#checkout-total").textContent = booksWithoutPrice.length
+      ? `Total no disponible: falta asignar precio a ${booksWithoutPrice.join(", ")}.`
+      : `Total: ${formatPrice.format(total)}`;
 
     form.addEventListener("input", (event) => {
       if (event.target === cardNumber || event.target === expiration) {
