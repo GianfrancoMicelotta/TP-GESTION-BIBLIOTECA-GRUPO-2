@@ -18,6 +18,7 @@
     app.updateNavigationCounts();
     app.updateRoleNavigation();
     app.setupForms();
+    if (document.querySelector("#form-finalizar-compra")) app.setupCheckout();
     app.renderProfile();
     app.updateRoleNavigation();
   };

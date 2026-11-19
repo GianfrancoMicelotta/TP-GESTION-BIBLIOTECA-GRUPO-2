@@ -9,15 +9,17 @@
     cart: "libraryhub_cart",
     books: "libraryhub_books",
     inventory: "libraryhub_inventory",
+    inventoryVersion: "libraryhub_inventory_version",
     accounts: "libraryhub_accounts",
     profile: "libraryhub_profile",
     catalogView: "libraryhub_catalog_view",
+    checkout: "libraryhub_checkout",
   };
   app.defaultFavorites = ["Rayuela", "Ficciones"];
   app.defaultCart = ["Rayuela", "El túnel"];
 
   app.resolveStorageKey = function resolveStorageKey(key) {
-    if (key !== app.storageKeys.favorites && key !== app.storageKeys.cart) return key;
+    if (![app.storageKeys.favorites, app.storageKeys.cart, app.storageKeys.checkout].includes(key)) return key;
     const profile = JSON.parse(localStorage.getItem(app.storageKeys.profile) || "null");
     return profile?.username ? `${key}_${profile.username}` : key;
   };
