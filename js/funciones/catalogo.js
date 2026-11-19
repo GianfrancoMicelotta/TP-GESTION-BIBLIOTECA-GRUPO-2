@@ -3,6 +3,60 @@
 
   const app = window.LibraryHub;
 
+  const catalogCovers = {
+    "El Hobbit": "img/img-LIBROS-catalogo/el-hobbit.jpg",
+    "Harry Potter y la piedra filosofal": "img/img-LIBROS-catalogo/Harry-Potter.jfif",
+    "La historia interminable": "img/img-LIBROS-catalogo/la-Historia-Interminable.jfif",
+    "El nombre del viento": "img/img-LIBROS-catalogo/El-Nombre-Del-Viento.jfif",
+    "Asesinato en el Orient Express": "img/img-LIBROS-catalogo/Asesinato-Orient-Express.jfif",
+    "El sabueso de los Baskerville": "img/img-LIBROS-catalogo/El-Sabueso.jfif",
+    "La chica del tren": "img/img-LIBROS-catalogo/La-chica-Del-Tren.jfif",
+    "Los hombres que no amaban a las mujeres": "img/img-LIBROS-catalogo/Los-hombres-amaban-mujeres.jfif",
+    "Fahrenheit 451": "img/img-LIBROS-catalogo/fahrenheit.jfif",
+    Dune: "img/img-LIBROS-catalogo/dune.jfif",
+    "El fin de la eternidad": "img/img-LIBROS-catalogo/Eternidad-fin.jfif",
+    "La máquina del tiempo": "img/img-LIBROS-catalogo/La-maquina-del-tiempo.jfif",
+    "Orgullo y prejuicio": "img/img-LIBROS-catalogo/Orgullo-yPrejuicio.jfif",
+    "Como agua para chocolate": "img/img-LIBROS-catalogo/Agua-Para-Chocolate.jfif",
+    "Yo antes de ti": "img/img-LIBROS-catalogo/yo-antes-de-ti.jfif",
+    "Bajo la misma estrella": "img/img-LIBROS-catalogo/Bajo-lamisma-Estrella.jfif",
+    Rayuela: "img/img-LIBROS-catalogo/Rayuela.png",
+    "El Aleph": "img/img-LIBROS-catalogo/El-Aleph.png",
+    Ficciones: "img/img-LIBROS-catalogo/Ficciones.jfif",
+    "El túnel": "img/img-LIBROS-catalogo/EL-Tunel.jfif",
+  };
+  const catalogPrices = {
+    "El Hobbit": 28000,
+    "Harry Potter y la piedra filosofal": 58221,
+    "La historia interminable": 65798,
+    "El nombre del viento": 31850,
+    "Asesinato en el Orient Express": 30600,
+    "El sabueso de los Baskerville": 19990,
+    "La chica del tren": 34900,
+    "Los hombres que no amaban a las mujeres": 40897,
+    "Fahrenheit 451": 19000,
+    Dune: 30466,
+    "El fin de la eternidad": 26414,
+    "La máquina del tiempo": 25000,
+    "Orgullo y prejuicio": 32000,
+    "Como agua para chocolate": 28000,
+    "Yo antes de ti": 43033,
+    "Bajo la misma estrella": 35000,
+    Rayuela: 47499,
+    "El Aleph": 38140,
+    Ficciones: 32999,
+    "El túnel": 23184,
+  };
+  const formatPrice = new Intl.NumberFormat("es-AR", {
+    style: "currency",
+    currency: "ARS",
+    maximumFractionDigits: 0,
+  });
+
+  app.getBookPrice = function getBookPrice(title) {
+    return Number.isSafeInteger(catalogPrices[title]) ? catalogPrices[title] : null;
+  };
+
   app.getPageBooks = function getPageBooks() {
     const cards = [...document.querySelectorAll(".tarjeta")].map((card) => {
       const title = card.querySelector("h3")?.textContent.trim();
@@ -16,6 +70,7 @@
         coverClass: [...(cover?.classList || [])].find((name) =>
           ["azul", "verde", "violeta", "dorado"].includes(name),
         ) || "azul",
+        coverSrc: cover?.tagName === "IMG" ? cover.getAttribute("src") : null,
         available: card.querySelector(".estado")?.textContent.trim() !== "No disponible",
       };
     }).filter((book) => book.title);
@@ -24,13 +79,19 @@
     return [...cards, ...customBooks];
   };
 
-  app.createBookRow = function createBookRow(book, actionLabel, actionName) {
+  app.createBookRow = function createBookRow(book, actionLabel, actionName, includeCover = false) {
     const row = document.createElement("div");
     row.className = "fila";
-    const cover = document.createElement("div");
+    const coverSrc = includeCover ? book.coverData || book.coverSrc : null;
+    const cover = document.createElement(coverSrc ? "img" : "div");
     cover.className = `portada ${book.coverClass || "azul"}`;
-    cover.textContent = book.title.charAt(0).toUpperCase();
-    cover.setAttribute("aria-hidden", "true");
+    if (coverSrc) {
+      cover.src = coverSrc;
+      cover.alt = `Portada de ${book.title}`;
+    } else {
+      cover.textContent = book.title.charAt(0).toUpperCase();
+      cover.setAttribute("aria-hidden", "true");
+    }
 
     const details = document.createElement("div");
     details.className = "datos";
@@ -39,6 +100,12 @@
     const author = document.createElement("p");
     author.textContent = [book.author, book.genre].filter(Boolean).join(" - ");
     details.append(title, author);
+    if (book.price) {
+      const price = document.createElement("p");
+      price.className = "precio";
+      price.textContent = `Precio: ${formatPrice.format(book.price)}`;
+      details.append(price);
+    }
 
     const button = document.createElement("button");
     button.className = "boton boton-claro";
@@ -62,8 +129,10 @@
           author: "",
           genre: "",
           coverClass: "azul",
+          coverSrc: catalogCovers[title],
+          price: catalogPrices[title],
         };
-        list.append(app.createBookRow(book, "Quitar", "removeFavorite"));
+        list.append(app.createBookRow(book, "Quitar", "removeFavorite", true));
       });
       if (favorites.length === 0) {
         const empty = document.createElement("p");
@@ -86,8 +155,10 @@
         title,
         author: "",
         coverClass: "azul",
+        coverSrc: catalogCovers[title],
+        price: catalogPrices[title],
       };
-      list.append(app.createBookRow(book, "Quitar", "removeCart"));
+      list.append(app.createBookRow(book, "Quitar", "removeCart", true));
     });
 
     const confirmButton = document.createElement("button");

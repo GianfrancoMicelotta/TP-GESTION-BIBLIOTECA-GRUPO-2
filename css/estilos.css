@@ -775,6 +775,115 @@ body.pagina-seccion .caja {
   box-shadow: 0 8px 24px rgba(32, 33, 36, 0.06);
 }
 
+#checkout-resumen {
+  border-top: 4px solid #1a1e81;
+}
+
+#checkout-resumen h2 {
+  margin-top: 0;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #e5e5e0;
+}
+
+#checkout-libros {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+#checkout-libros li {
+  padding: 12px 8px;
+  border-bottom: 1px solid #e5e5e0;
+  line-height: 1.5;
+}
+
+#checkout-cantidad {
+  margin: 16px 0 8px;
+  color: #65717c;
+  text-align: right;
+}
+
+#checkout-total {
+  margin: 0;
+  padding: 14px 16px;
+  border-radius: 4px;
+  background-color: #edf2fb;
+  color: #1a1e81;
+  font-size: 1.2rem;
+  font-weight: 700;
+  text-align: right;
+}
+
+body.oscuro #checkout-resumen h2,
+body.oscuro #checkout-libros li {
+  border-color: #333b48;
+}
+
+body.oscuro #checkout-total {
+  background-color: #232e40;
+  color: #b7c9f0;
+}
+
+#checkout-datos {
+  border-top: 4px solid #1a1e81;
+}
+
+#checkout-datos h2 {
+  margin-top: 0;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #e5e5e0;
+}
+
+#checkout-datos > p {
+  line-height: 1.6;
+}
+
+#form-finalizar-compra {
+  max-width: 760px;
+}
+
+#form-finalizar-compra label {
+  margin: 18px 0 6px;
+  font-weight: 600;
+}
+
+#form-finalizar-compra input,
+#form-finalizar-compra select,
+#form-finalizar-compra textarea {
+  border-radius: 4px;
+}
+
+#form-finalizar-compra input:focus,
+#form-finalizar-compra select:focus,
+#form-finalizar-compra textarea:focus {
+  border-color: #1a1e81;
+  outline: 2px solid rgba(26, 30, 129, 0.15);
+}
+
+#form-finalizar-compra fieldset {
+  margin: 20px 0;
+  padding: 16px;
+  border: 1px solid #e5e5e0;
+  border-radius: 4px;
+}
+
+#form-finalizar-compra legend {
+  padding: 0 6px;
+  font-weight: 600;
+}
+
+body.oscuro #checkout-datos h2 {
+  border-color: #333b48;
+}
+
+body.oscuro #checkout-datos label {
+  color: #eeeeee;
+}
+
+body.oscuro #form-finalizar-compra fieldset {
+  border-color: #333b48;
+}
+
 .login {
   max-width: 400px;
   margin: 40px auto;
@@ -985,6 +1094,10 @@ body.pagina-seccion .portada {
   margin-top: 0;
 }
 
+.precio {
+  font-weight: 700;
+}
+
 #catalogo:not(.catalogo-lista) .estado {
   justify-self: start;
   align-self: start;
@@ -1000,6 +1113,12 @@ img.portada {
   width: 100%;
   height: auto;
   display: block;
+}
+
+#catalogo:not(.catalogo-lista) img.portada {
+  height: 280px;
+  object-fit: contain;
+  background-color: #f3f3f3;
 }
 
 .favorito {
@@ -1042,6 +1161,16 @@ img.portada {
   height: 70px;
   line-height: 70px;
   font-size: 28px;
+}
+
+#lista-favoritos .fila > img.portada {
+  width: 70px;
+  height: 100px;
+  object-fit: cover;
+}
+
+#lista-carrito .fila > img.portada {
+  object-fit: cover;
 }
 
 #lista-favoritos .datos {
