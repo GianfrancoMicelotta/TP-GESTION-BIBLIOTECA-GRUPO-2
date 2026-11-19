@@ -93,26 +93,7 @@
     if (target.id === "confirmar-compra") {
       const cart = app.readList(app.storageKeys.cart, app.defaultCart);
       if (cart.length === 0) return;
-      const quantities = cart.reduce((result, title) => {
-        result[title] = (result[title] || 0) + 1;
-        return result;
-      }, {});
-      const inventory = app.ensureInventory();
-      const unavailable = Object.entries(quantities).find(([title, quantity]) =>
-        inventory[title] < quantity,
-      );
-      if (unavailable) {
-        app.notify(`No hay ejemplares suficientes de "${unavailable[0]}".`);
-        return;
-      }
-      Object.entries(quantities).forEach(([title, quantity]) => {
-        inventory[title] -= quantity;
-      });
-      app.saveInventory(inventory);
-      app.saveList(app.storageKeys.cart, []);
-      app.renderCart();
-      app.updateNavigationCounts();
-      app.notify("Préstamo confirmado. ¡Que disfrutes la lectura!");
+      window.location.href = "finalizar-compra.html";
       return;
     }
 
@@ -131,6 +112,7 @@
           .filter((item) => item.username !== profile.username));
         localStorage.removeItem(app.resolveStorageKey(app.storageKeys.favorites));
         localStorage.removeItem(app.resolveStorageKey(app.storageKeys.cart));
+        localStorage.removeItem(app.resolveStorageKey(app.storageKeys.checkout));
       }
       localStorage.removeItem(app.storageKeys.profile);
       window.location.href = "index.html";

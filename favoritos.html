@@ -14,8 +14,8 @@
     <a href="mi-cuenta.html">Mi cuenta</a>
     <a href="carrito.html">Mi Carrito (2)</a>
     
-    <div class="selector">
-      <a href="admin.html">Administrador</a><a class="activo" href="catalogo.html">Usuario</a>
+    <div class="selector" hidden>
+      <a href="admin.html">Administrador</a><a class="activo" href="catalogo.html">Área de usuario</a>
     </div>
     <button class="boton boton-claro boton-tema" type="button" title="Cambiar tema" aria-label="Cambiar tema">
     <img src="img/iconoTema.png" alt="">
@@ -26,30 +26,14 @@
   <main>
     <h1>Mis Favoritos</h1>
     <p>Estos son los libros que marcaste como favoritos.</p>
-    <section class="caja" id="lista-favoritos">
-      <div class="fila">
-        <div class="portada azul">R</div>
-        <div class="datos">
-          <h3>Rayuela</h3>
-          <p>Julio Cortázar - Novela</p>
-        </div>
-        <button class="boton boton-claro" type="button">Quitar</button>
-      </div>
-      <div class="fila">
-        <div class="portada violeta">F</div>
-        <div class="datos">
-          <h3>Ficciones</h3>
-          <p>Jorge L. Borges - Cuentos</p>
-        </div>
-        <button class="boton boton-claro" type="button">Quitar</button>
-      </div>
-    </section>
+    <section class="caja" id="lista-favoritos"></section>
   </main>
   <footer id="footer-principal">
       <div>
          <h4>Contactanos</h4>
          <p>Email: contacto@libraryhub.com</p>
         <p>Email: soportelibraryhub@gmail.com</p>
+         <img src="img/qr.png" alt="Código QR">
       </div>
       <a id="Contácto"> </a>
       <div>

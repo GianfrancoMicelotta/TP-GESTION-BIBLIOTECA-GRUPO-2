@@ -8,9 +8,9 @@
 </head>
 <body class="pagina-seccion">
   <header>
-    <a class="logo" href="index.html">libraryHub</a>
-    <div class="selector">
-      <a class="activo" href="admin.html">Administrador</a><a href="catalogo.html">Usuario</a>
+    <a class="logo" href="admin.html">libraryHub</a>
+    <div class="selector" hidden>
+      <a class="activo" href="admin.html" aria-current="page">Administrador</a><a href="catalogo.html">Área de usuario</a>
     </div>
     <button class="boton boton-claro boton-tema" type="button" title="Cambiar tema" aria-label="Cambiar tema">
     <img src="img/iconoTema.png" alt="">
@@ -41,7 +41,11 @@
         <label for="ejemplares">Ejemplares</label>
         <input type="number" id="ejemplares" min="1" value="1" required>
         <label for="portada">Portada</label>
-        <input type="file" id="portada" accept="image/*">
+        <div class="selector-archivo">
+          <input class="solo-lector" type="file" id="portada" accept="image/*" aria-describedby="nombre-portada">
+          <label class="boton boton-claro" for="portada">Seleccionar archivo</label>
+          <span id="nombre-portada" aria-live="polite">No se seleccionó ningún archivo</span>
+        </div>
         <label for="sinopsis">Sinopsis</label>
         <textarea id="sinopsis" rows="3"></textarea>
         <button class="boton" type="submit">Guardar libro</button>
@@ -155,16 +159,112 @@
           <td>1</td>
         </tr>
         <tr>
+          <td>El Hobbit</td>
+          <td>J. R. R. Tolkien</td>
+          <td>Fantasía</td>
+          <td>2</td>
+        </tr>
+        <tr>
+          <td>Harry Potter y la piedra filosofal</td>
+          <td>J. K. Rowling</td>
+          <td>Fantasía</td>
+          <td>3</td>
+        </tr>
+        <tr>
+          <td>La historia interminable</td>
+          <td>Michael Ende</td>
+          <td>Fantasía</td>
+          <td>4</td>
+        </tr>
+        <tr>
+          <td>El nombre del viento</td>
+          <td>Patrick Rothfuss</td>
+          <td>Fantasía</td>
+          <td>5</td>
+        </tr>
+        <tr>
+          <td>Asesinato en el Orient Express</td>
+          <td>Agatha Christie</td>
+          <td>Misterio</td>
+          <td>2</td>
+        </tr>
+        <tr>
+          <td>El sabueso de los Baskerville</td>
+          <td>Arthur Conan Doyle</td>
+          <td>Policial</td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <td>La chica del tren</td>
+          <td>Paula Hawkins</td>
+          <td>Suspenso</td>
+          <td>3</td>
+        </tr>
+        <tr>
+          <td>Los hombres que no amaban a las mujeres</td>
+          <td>Stieg Larsson</td>
+          <td>Policial</td>
+          <td>4</td>
+        </tr>
+        <tr>
+          <td>Fahrenheit 451</td>
+          <td>Ray Bradbury</td>
+          <td>Ciencia ficción</td>
+          <td>5</td>
+        </tr>
+        <tr>
+          <td>Dune</td>
+          <td>Frank Herbert</td>
+          <td>Ciencia ficción</td>
+          <td>2</td>
+        </tr>
+        <tr>
+          <td>El fin de la eternidad</td>
+          <td>Isaac Asimov</td>
+          <td>Ciencia ficción</td>
+          <td>3</td>
+        </tr>
+        <tr>
+          <td>La máquina del tiempo</td>
+          <td>H. G. Wells</td>
+          <td>Ciencia ficción</td>
+          <td>4</td>
+        </tr>
+        <tr>
+          <td>Orgullo y prejuicio</td>
+          <td>Jane Austen</td>
+          <td>Romance</td>
+          <td>5</td>
+        </tr>
+        <tr>
+          <td>Como agua para chocolate</td>
+          <td>Laura Esquivel</td>
+          <td>Romance</td>
+          <td>2</td>
+        </tr>
+        <tr>
+          <td>Yo antes de ti</td>
+          <td>Jojo Moyes</td>
+          <td>Romance</td>
+          <td>3</td>
+        </tr>
+        <tr>
+          <td>Bajo la misma estrella</td>
+          <td>John Green</td>
+          <td>Romance</td>
+          <td>4</td>
+        </tr>
+        <tr>
           <td>Rayuela</td>
           <td>Julio Cortázar</td>
           <td>Novela</td>
-          <td>3</td>
+          <td>1</td>
         </tr>
         <tr>
           <td>El Aleph</td>
           <td>Jorge L. Borges</td>
           <td>Cuentos</td>
-          <td>2</td>
+          <td>5</td>
         </tr>
         <tr>
           <td>Ficciones</td>

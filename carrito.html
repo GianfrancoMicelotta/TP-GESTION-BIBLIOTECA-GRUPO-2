@@ -13,8 +13,8 @@
     <a href="catalogo.html">Catálogo</a>
     <a href="mi-cuenta.html">Mi cuenta</a>
     <a href="favoritos.html">Favoritos</a>
-    <div class="selector">
-      <a href="admin.html">Administrador</a><a class="activo" href="catalogo.html">Usuario</a>
+    <div class="selector" hidden>
+      <a href="admin.html">Administrador</a><a class="activo" href="catalogo.html">Área de usuario</a>
     </div>
     <button class="boton boton-claro boton-tema" type="button" title="Cambiar tema" aria-label="Cambiar tema">
     <img src="img/iconoTema.png" alt="">
@@ -25,27 +25,7 @@
   <main>
     <h1>Mi carrito</h1>
     <p>Revisá los libros que vas a comprar antes de confirmar.</p>
-    <section class="caja" id="lista-carrito">
-      <div class="fila">
-        <div class="portada azul">R</div>
-        <div class="datos">
-          <h3>Rayuela</h3>
-          <p>Julio Cortázar</p>
-        </div>
-        <button class="boton boton-claro" type="button">Quitar</button>
-      </div>
-      <div class="fila">
-        <div class="portada dorado">T</div>
-        <div class="datos">
-          <h3>El túnel</h3>
-          <p>Ernesto Sabato</p>
-        </div>
-        <button class="boton boton-claro" type="button">Quitar</button>
-      </div>
-      
-        <button class="boton" id="confirmar-compra" type="button">Confirmar compra (2 libros)</button>
-      
-    </section>
+    <section class="caja" id="lista-carrito"></section>
   </main>
   <footer id="footer-principal">
       <div>
